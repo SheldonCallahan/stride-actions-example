@@ -1,0 +1,112 @@
+{
+  "baseUrl": "${host}",
+  "key": "action-bot",
+  "lifecycle": {
+    "installed": "/installed",
+    "uninstalled": "/uninstalled"
+  },
+  "modules": {
+    "chat:bot": [
+      {
+        "key": "action-bot",
+        "mention": {
+          "url": "/bot-mention"
+        }
+      }
+    ],
+    "chat:bot:messages": [
+      {
+        "key": "bot-regex",
+        "pattern": ".*action*.",
+        "url": "/action-message"
+      }
+    ],
+    "chat:inputAction": [
+      {
+        "key": "app-input-action",
+        "name": {
+          "value": "Open Dialog..."
+        },
+        "target": "app-dialog"
+      }
+  ],
+    "chat:dialog": [
+      {
+        "key": "app-dialog",
+        "title": {
+          "value": "App Dialog"
+        },
+        "options": {
+          "size": {
+            "width": "500px",
+            "height": "300px"
+          },
+          "primaryAction": {
+            "key": "action-appendMessage",
+            "name": {
+              "value": "Append Message"
+            }
+          },
+          "secondaryActions": [
+            {
+              "key": "action-close",
+              "name": {
+                "value": "Close"
+              }
+                },
+            {
+              "key": "action-openSidebar",
+              "name": {
+                "value": "Open Sidebar"
+              },
+              "target": "app-sidebar"
+                },
+            {
+              "key": "action-disableButton",
+              "name": {
+                "value": "Disable Button"
+              }
+                }
+              ]
+        },
+        "url": "/dialog",
+        "authentication": "jwt"
+          }],
+    "chat:actionTarget": [
+      {
+        "key": "refapp-action-openSidebar",
+        "openSidebar": {
+          "key": "app-sidebar"
+        }
+      },
+      {
+        "key": "refapp-action-openDialog",
+        "openDialog": {
+          "key": "app-dialog"
+        }
+      },
+      {
+        "key": "refapp-action-callService",
+        "callService": {
+          "url": "app-service"
+        }
+      },
+      {
+        "key": "refapp-action-callService-updateMessage",
+        "callService": {
+          "url": "app-service-updateMessage"
+        }
+      }
+
+    ],
+    "chat:messageAction": [
+      {
+        "key": "app-message-action",
+        "name": {
+          "value": "Send to Dialog"
+        },
+        "target": "app-dialog"
+  }
+]
+  }
+}
