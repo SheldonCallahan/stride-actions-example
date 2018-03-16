@@ -1,10 +1,9 @@
 /**
  * URL Routes for this application
  * --------------------------
- * Whenever Stride makes a call to your app (webhook, glance, sidebar, bot), it 
+ * Whenever Stride makes a call to your app (webhook, glance, sidebar, bot), it
  * send a to these urls.
  */
-
 
 //
 // Set up Enviorment Variables
@@ -33,10 +32,8 @@ const express = require("express"),
     clientSecret: CLIENT_SECRET
   });
 
-
 router.use(bodyParser.json());
-router.use(express.static('../public'));
-
+router.use(express.static("../public"));
 
 //
 // Installation Lifecyle webhook that runs after application is installed
@@ -56,28 +53,27 @@ router.post("/installed", function(req, res) {
   res.sendStatus(204);
 });
 
-
-
 //
 // Uninstall Lifecyle webhook that fires after application is uninstalled
 // -----------------------------------------------------------------------------
-app.post('/uninstalled', (req, res) => {
-  console.log('App uninstalled from a conversation.');
+router.post("/uninstalled", (req, res) => {
+  logger("App uninstalled from a conversation.");
   res.sendStatus(204);
 });
-
 
 //
 // Re-route to the descritor URL to Serve the descriptor file
 // -----------------------------------------------------------------------------
 router.get("/", function(req, res) {
-   res.redirect("/descriptor");
+  res.redirect("/descriptor");
 });
 
-router.get("/descriptor", (req, res)=>{
-      logger("router");
-   let descriptor = JSON.parse(
-    fs.readFileSync(path.join(__dirname, "../public/app-descriptor.json")).toString()
+router.get("/descriptor", (req, res) => {
+  logger("router");
+  let descriptor = JSON.parse(
+    fs
+      .readFileSync(path.join(__dirname, "../public/app-descriptor.json"))
+      .toString()
   );
   descriptor.baseUrl = "https://" + req.headers.host;
   res.contentType = "application/json";
@@ -91,7 +87,7 @@ router.get("/descriptor", (req, res)=>{
 router.get("/dialog", function(req, res) {
   fs.readFile("./public/modal.html", function(err, descriptorTemplate) {
     if (err) {
-      throw("Error Descriptor not loaded");
+      throw "Error Descriptor not loaded";
     }
     const template = _.template(descriptorTemplate);
     const descriptor = template({
@@ -102,10 +98,8 @@ router.get("/dialog", function(req, res) {
   });
 });
 
-
-
 //
-// If the word "action" is mentioned in a message this url will be hit and send 
+// If the word "action" is mentioned in a message this url will be hit and send
 // back a response
 // -----------------------------------------------------------------------------
 router.post("/action-message", jwt.validateJWT, function(
@@ -122,7 +116,7 @@ router.post("/action-message", jwt.validateJWT, function(
   });
 });
 
-// If the bot is mention it will send an applicaiton card back with open dialog 
+// If the bot is mention it will send an applicaiton card back with open dialog
 // action button
 // -----------------------------------------------------------------------------
 router.post("/bot-mention", jwt.validateJWT, function(
@@ -137,7 +131,5 @@ router.post("/bot-mention", jwt.validateJWT, function(
     res.send("200");
   });
 });
-
-
 
 module.exports = router;
