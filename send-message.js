@@ -4,10 +4,9 @@ const request = require("request");
 // Register Node.js middleware
 // -----------------------------------------------------------------------------
 function factory({ apiBaseUrl, clientId, clientSecret, logger = console }) {
-
-//
-// Get access token from Stride API
-// -----------------------------------------------------------------------------  
+  //
+  // Get access token from Stride API
+  // ---------------------------------------------------------------------------
   function getAccessToken(callback) {
     const options = {
       uri: apiBaseUrl + "/oauth/token",
@@ -30,9 +29,9 @@ function factory({ apiBaseUrl, clientId, clientSecret, logger = console }) {
     });
   }
 
-//
-// Send Message Function
-// -----------------------------------------------------------------------------
+  //
+  // Send Message Function
+  // -----------------------------------------------------------------------------
   function sendMessage(cloudId, conversationId, messageTxt, callback) {
     let options = {};
 
@@ -40,7 +39,7 @@ function factory({ apiBaseUrl, clientId, clientSecret, logger = console }) {
       if (err) {
         callback(err);
       } else {
-        const uri =`${apiBaseUrl}/site/${cloudId}/conversation/${conversationId}/message`;
+        const uri = `${apiBaseUrl}/site/${cloudId}/conversation/${conversationId}/message`;
         options = {
           uri: uri,
           method: "POST",
