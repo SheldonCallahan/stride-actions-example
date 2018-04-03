@@ -2,24 +2,24 @@
 //https://developer.atlassian.com/cloud/stride/apis/document/marks/action/
 let actionMessage = {
   version: 1,
-  type: "doc",
+  type: 'doc',
   content: [
     {
-      type: "paragraph",
+      type: 'paragraph',
       content: [
         {
-          type: "text",
-          text: "Open Dialog",
+          type: 'text',
+          text: 'Open Dialog',
           marks: [
             {
-              type: "action",
+              type: 'action',
               attrs: {
-                title: "view dialog",
+                title: 'view dialog',
                 target: {
-                  key: "app-dialog"
+                  key: 'app-dialog'
                 },
                 parameters: {
-                  reportId: "123"
+                  reportId: '123'
                 }
               }
             }
@@ -28,8 +28,8 @@ let actionMessage = {
       ]
     }
   ]
-};
+}
 
 module.exports = {
   actionMessage
-};
+}

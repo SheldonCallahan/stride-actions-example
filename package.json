@@ -4,54 +4,63 @@
   "description": "I'm an example of Stride actions.",
   "author": "Sheldon Callahan <sheldon@atlassian.com>",
   "main": "app.js",
+  "private": true,
   "scripts": {
-    "start": "nodemon app.js",
+    "start": "node ./bin/www",
+    "verbose": "DEBUG=stride-boilerplate:* npm start",
+    "dev": "npm run lint | DEBUG=stride-boilerplate nodemon ./bin/www",
     "lint": "eslint . --ext .js --fix",
     "depcheck": "depcheck",
-    "ngrok": "ngrok http 8000 --log=stdout | npm start"
+    "testdev": "jest --watch",
+    "test": "jest"
   },
   "dependencies": {
-    "body-parser": "^1.15.2",
-    "express": "^4.14.0",
+    "body-parser": "~1.18.2",
+    "cookie-parser": "~1.4.3",
+    "debug": "~2.6.9",
+    "dotenv": "^5.0.1",
+    "express": "~4.15.5",
+    "hbs": "~4.0.1",
+    "morgan": "~1.9.0",
     "jwt-simple": "^0.5.1",
-    "lodash": "^4.17.4",
-    "morgan": "^1.9.0",
-    "prettyjson": "^1.2.1",
-    "pug": "*",
     "request": "^2.72.0"
   },
-  "repository": {
-    "url": "git@bitbucket.org:atlassian/stride-action-example.git"
-  },
-  "license": "Apache-2.0",
-  "keywords": [
-    "node",
-    "glitch",
-    "express",
-    "stride",
-    "atlassian",
-    "bot"
-  ],
   "devDependencies": {
-    "nodemon": "*",
-    "depcheck": "*",
-    "eslint": "*",
-    "eslint-plugin-prettier": "*",
-    "eslint-plugin-standard": "*",
-    "prettier": "*"
+    "depcheck": "^0.6.9",
+    "eslint": "^4.19.1",
+    "eslint-plugin-jest": "^21.15.0",
+    "eslint-plugin-prettier": "^2.6.0",
+    "eslint-plugin-standard": "^3.0.1",
+    "jest": "^22.4.3",
+    "nodemon": "^1.17.2",
+    "prettier": "^1.11.1",
+    "supertest": "bkeepers/supertest#unknown-errors"
   },
   "eslintConfig": {
-    "extends": "eslint:recommended",
+    "extends": [
+      "eslint:recommended",
+      "plugin:jest/recommended"
+    ],
     "plugins": [
+      "jest",
       "standard",
       "prettier"
     ],
     "env": {
       "es6": true,
-      "node": true
+      "node": true,
+      "jest/globals": true
     },
     "rules": {
-      "prettier/prettier": "error"
+      "prettier/prettier": [
+        "error",
+        {
+          "singleQuote": true,
+          "semi": false,
+          "trailingComma": "none",
+          "bracketSpacing": true
+        }
+      ]
     }
   }
 }

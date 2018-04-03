@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Sidebar</title>
+</head>
+<body>
+  <button id="sidebarButton" onclick="myFunction()">Open Modal</button>
+
+
+  <script src='https://dev-lib.stride.com/javascript/simple-xdm.js'></script>
+  <script>
+    function myFunction() {
+
+      AP.dialog.open({
+        key: "refapp-action-openDialog",
+        // Use the dialog key declared in the descriptor
+        //   options: dialogOptions,        // Customize the dialog (title, size, etc.) - optional
+        //   parameters: customParameters   // To pass custom parameters - optional
+      });
+    }
+
+  </script>
+</body>
+</html>
+

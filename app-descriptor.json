@@ -29,7 +29,7 @@
         },
         "target": "app-dialog"
       }
-  ],
+    ],
     "chat:dialog": [
       {
         "key": "app-dialog",
@@ -53,25 +53,26 @@
               "name": {
                 "value": "Close"
               }
-                },
+            },
             {
               "key": "action-openSidebar",
               "name": {
                 "value": "Open Sidebar"
               },
               "target": "app-sidebar"
-                },
+            },
             {
               "key": "action-disableButton",
               "name": {
                 "value": "Disable Button"
               }
-                }
-              ]
+            }
+          ]
         },
         "url": "/dialog",
         "authentication": "jwt"
-          }],
+      }
+    ],
     "chat:actionTarget": [
       {
         "key": "refapp-action-openSidebar",
@@ -88,16 +89,15 @@
       {
         "key": "refapp-action-callService",
         "callService": {
-          "url": "app-service"
+          "url": "/app-service"
         }
       },
       {
         "key": "refapp-action-callService-updateMessage",
         "callService": {
-          "url": "app-service-updateMessage"
+          "url": "/app-service-updateMessage"
         }
       }
-
     ],
     "chat:messageAction": [
       {
@@ -106,7 +106,31 @@
           "value": "Send to Dialog"
         },
         "target": "app-dialog"
-  }
-]
+      }
+    ],
+    "chat:glance": [
+      {
+        "key": "app-glance",
+        "name": {
+          "value": "App Glance"
+        },
+        "icon": {
+          "url": "/public/img/icon.png",
+          "url@2x": "/public/img/icon.png"
+        },
+        "target": "app-sidebar",
+        "queryUrl": "/glance/state"
+      }
+    ],
+    "chat:sidebar": [
+      {
+        "key": "app-sidebar",
+        "name": {
+          "value": "App Sidebar"
+        },
+        "url": "/sidebar",
+        "authentication": "jwt"
+      }
+    ]
   }
 }
