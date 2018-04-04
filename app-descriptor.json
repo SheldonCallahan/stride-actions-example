@@ -131,6 +131,13 @@
         "url": "/sidebar",
         "authentication": "jwt"
       }
-    ]
+    ],
+      "chat:actionTarget": [{
+          "key": "refapp-action-openSidebar",
+          "openSidebar": {
+            "key": "app-sidebar"
+          }
+        }
+      ]
   }
 }

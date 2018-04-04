@@ -21,8 +21,8 @@
     "dotenv": "^5.0.1",
     "express": "~4.15.5",
     "hbs": "~4.0.1",
-    "morgan": "~1.9.0",
     "jwt-simple": "^0.5.1",
+    "morgan": "~1.9.0",
     "request": "^2.72.0"
   },
   "devDependencies": {

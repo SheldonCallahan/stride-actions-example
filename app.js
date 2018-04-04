@@ -25,4 +25,4 @@ const server = http.createServer(app)
 // -----------------------------------------------------------------------------
 app.use('/', index)
 
-module.exports = app;
+module.exports = app

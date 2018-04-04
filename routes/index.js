@@ -71,9 +71,7 @@ router.get('/', function(req, res) {
 router.get('/descriptor', (req, res) => {
   logger('router')
   let descriptor = JSON.parse(
-    fs
-      .readFileSync(path.join(__dirname, '../app-descriptor.json'))
-      .toString()
+    fs.readFileSync(path.join(__dirname, '../app-descriptor.json')).toString()
   )
   descriptor.baseUrl = 'https://' + req.headers.host
   res.contentType = 'application/json'
@@ -129,6 +127,20 @@ router.post('/bot-mention', jwt.validateJWT, function(
     logger('Message Sent: ', actionCard)
     //Stop Webhook from sending 3 times by returning 200;
     res.send('200')
+  })
+})
+
+router.get('/sidebar', jwt.validateJWT, (req, res) => {
+  fs.readFile('./public/sidebar/index.html', function(err, descriptorTemplate) {
+    if (err) {
+      throw 'Error Descriptor not loaded'
+    }
+    const template = _.template(descriptorTemplate)
+    const sidebar = template({
+      host: 'https://' + req.headers.host
+    })
+    res.set('Content-Type', 'text/html')
+    res.send(sidebar)
   })
 })
 
