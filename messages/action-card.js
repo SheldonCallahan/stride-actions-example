@@ -1,4 +1,4 @@
-//Data structure for creat8hg a dynamic action on an application card to open dialog modal
+//Data structure for creating a dynamic action on an application card to open dialog modal
 //https://developer.atlassian.com/cloud/stride/apis/document/nodes/applicationCard/
 let actionCard = {
   version: 1,
