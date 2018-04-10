@@ -17,7 +17,6 @@ const API_BASE_URL = 'https://api.atlassian.com'
 // Register Node.js middleware
 // -----------------------------------------------------------------------------
 const express = require('express'),
-  _ = require('lodash'),
   path = require('path'),
   fs = require('fs'),
   bodyParser = require('body-parser'),
@@ -32,8 +31,14 @@ const express = require('express'),
     clientSecret: CLIENT_SECRET
   })
 
+logger('router engaged')
 router.use(bodyParser.json())
-router.use(express.static('../public'))
+
+router.use(express.static('./public'))
+
+//Serves all the request which includes /images in the url from Images folder
+router.use('/img', express.static(__dirname + 'img'))
+router.set('view engine', 'hbs')
 
 //
 // Installation Lifecyle webhook that runs after application is installed
@@ -83,17 +88,7 @@ router.get('/descriptor', (req, res) => {
 // Serve the html to the modal dialog window on stride
 // -----------------------------------------------------------------------------
 router.get('/dialog', function(req, res) {
-  fs.readFile('./public/modal.html', function(err, descriptorTemplate) {
-    if (err) {
-      throw 'Error Descriptor not loaded'
-    }
-    const template = _.template(descriptorTemplate)
-    const descriptor = template({
-      host: 'https://' + req.headers.host
-    })
-    res.set('Content-Type', 'text/html')
-    res.send(descriptor)
-  })
+  res.render('modal', { title: 'Modal' })
 })
 
 //
@@ -130,17 +125,14 @@ router.post('/bot-mention', jwt.validateJWT, function(
   })
 })
 
-router.get('/sidebar', jwt.validateJWT, (req, res) => {
-  fs.readFile('./public/sidebar/index.html', function(err, descriptorTemplate) {
-    if (err) {
-      throw 'Error Descriptor not loaded'
+router.get('/sidebar', (req, res) => {
+  res.render('sidebar', { title: 'Sidebar' })
+})
+router.get('/glance/state', (req, res) => {
+  res.send({
+    label: {
+      value: 'Sidebar Action'
     }
-    const template = _.template(descriptorTemplate)
-    const sidebar = template({
-      host: 'https://' + req.headers.host
-    })
-    res.set('Content-Type', 'text/html')
-    res.send(sidebar)
   })
 })
 

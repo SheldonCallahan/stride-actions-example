@@ -115,8 +115,8 @@
           "value": "App Glance"
         },
         "icon": {
-          "url": "/public/img/icon.png",
-          "url@2x": "/public/img/icon.png"
+          "url": "/img/icon.png",
+          "url@2x": "/img/icon.png"
         },
         "target": "app-sidebar",
         "queryUrl": "/glance/state"
@@ -131,13 +131,6 @@
         "url": "/sidebar",
         "authentication": "jwt"
       }
-    ],
-      "chat:actionTarget": [{
-          "key": "refapp-action-openSidebar",
-          "openSidebar": {
-            "key": "app-sidebar"
-          }
-        }
-      ]
+    ]
   }
 }
