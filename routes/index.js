@@ -43,7 +43,7 @@ router.set('view engine', 'hbs')
 //
 // Installation Lifecyle webhook that runs after application is installed
 // -----------------------------------------------------------------------------
-router.post('/installed', function(req, res) {
+router.post('/installed', jwt.validateJWT, function(req, res) {
   debug('router installed in a conversation')
   const cloudId = req.body.cloudId
   const conversationId = req.body.resourceId
@@ -61,7 +61,7 @@ router.post('/installed', function(req, res) {
 //
 // Uninstall Lifecyle webhook that fires after application is uninstalled
 // -----------------------------------------------------------------------------
-router.post('/uninstalled', (req, res) => {
+router.post('/uninstalled', jwt.validateJWT, (req, res) => {
   debug('App uninstalled from a conversation.')
   res.sendStatus(204)
 })
