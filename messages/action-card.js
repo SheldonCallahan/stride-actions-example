@@ -1,4 +1,5 @@
 //Data structure for creating a dynamic action on an application card to open dialog modal
+// We're defining a application card that has an action that is targeting a dialog that was defined in the app descriptor.
 //https://developer.atlassian.com/cloud/stride/apis/document/nodes/applicationCard/
 let actionCard = {
   version: 1,
