@@ -21,7 +21,7 @@ const express = require('express'),
   fs = require('fs'),
   bodyParser = require('body-parser'),
   router = express(),
-  logger = require('morgan'),
+  debug = require('debug'),
   jwt = require('../lib/jwt.js').factory({
     clientSecret: CLIENT_SECRET
   }),
@@ -31,7 +31,7 @@ const express = require('express'),
     clientSecret: CLIENT_SECRET
   })
 
-logger('router engaged')
+debug('router engaged')
 router.use(bodyParser.json())
 
 router.use(express.static('./public'))
@@ -44,7 +44,7 @@ router.set('view engine', 'hbs')
 // Installation Lifecyle webhook that runs after application is installed
 // -----------------------------------------------------------------------------
 router.post('/installed', function(req, res) {
-  logger('router installed in a conversation')
+   debug('router installed in a conversation')
   const cloudId = req.body.cloudId
   const conversationId = req.body.resourceId
   sendToStride.sendMessage(
@@ -52,7 +52,7 @@ router.post('/installed', function(req, res) {
     conversationId,
     'Hi there! I am all about actions',
     function(err) {
-      if (err) logger.log(err)
+      if (err)  debug.log(err)
     }
   )
   res.sendStatus(204)
@@ -62,7 +62,7 @@ router.post('/installed', function(req, res) {
 // Uninstall Lifecyle webhook that fires after application is uninstalled
 // -----------------------------------------------------------------------------
 router.post('/uninstalled', (req, res) => {
-  logger('App uninstalled from a conversation.')
+   debug('App uninstalled from a conversation.')
   res.sendStatus(204)
 })
 
@@ -74,7 +74,7 @@ router.get('/', function(req, res) {
 })
 
 router.get('/descriptor', (req, res) => {
-  logger('router')
+   debug('router')
   let descriptor = JSON.parse(
     fs.readFileSync(path.join(__dirname, '../app-descriptor.json')).toString()
   )
@@ -100,10 +100,10 @@ router.post('/action-message', jwt.validateJWT, function(
   res
 ) {
   let { actionMessage } = require('../messages/action-message.js')
-  logger(actionMessage)
+   debug(actionMessage)
 
   sendToStride.sendMessage(cloudId, conversation.id, actionMessage, function() {
-    logger('Message Sent: ', actionMessage)
+     debug('Message Sent: ', actionMessage)
     //Stop Webhook from sending 3 times by returning 200;
     res.send('200')
   })
@@ -119,7 +119,7 @@ router.post('/bot-mention', jwt.validateJWT, function(
   let { actionCard } = require('../messages/action-card.js')
 
   sendToStride.sendMessage(cloudId, conversation.id, actionCard, function() {
-    logger('Message Sent: ', actionCard)
+     debug('Message Sent: ', actionCard)
     //Stop Webhook from sending 3 times by returning 200;
     res.send('200')
   })

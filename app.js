@@ -6,11 +6,11 @@
 // -----------------------------------------------------------------------------
 
 const express = require('express'),
-  logger = require('morgan'),
+  debug = require('debug'),
   index = require('./routes/index')
 
 var app = express()
-app.use(logger('dev'))
+app.use(debug('dev'))
 
 //
 // Connect to Router
