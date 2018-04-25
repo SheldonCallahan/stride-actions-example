@@ -22,9 +22,7 @@ const express = require('express'),
   bodyParser = require('body-parser'),
   router = express(),
   debug = require('debug'),
-  jwt = require('../lib/jwt.js').factory({
-    clientSecret: CLIENT_SECRET
-  }),
+  jwt = require('../lib/jwt.js'),
   sendToStride = require('../lib/send-message.js').factory({
     apiBaseUrl: API_BASE_URL,
     clientId: CLIENT_ID,
@@ -70,7 +68,7 @@ router.post('/uninstalled', jwt.validateJWT, (req, res) => {
 // Re-route to the descritor URL to Serve the descriptor file
 // -----------------------------------------------------------------------------
 router.get('/', function(req, res) {
-  res.redirect('/descriptor')
+  res.send('/descriptor')
 })
 
 router.get('/descriptor', (req, res) => {
@@ -84,45 +82,11 @@ router.get('/descriptor', (req, res) => {
   res.end()
 })
 
-//
-// Serve the html to the modal dialog window on stride
-// -----------------------------------------------------------------------------
+// //
+// // Serve the html to the modal dialog window on stride
+// // -----------------------------------------------------------------------------
 router.get('/dialog', function(req, res) {
   res.render('modal', { title: 'Modal' })
-})
-
-//
-// If the word "action" is mentioned in a message this url will be hit and send
-// back a response
-// -----------------------------------------------------------------------------
-router.post('/action-message', jwt.validateJWT, function(
-  { body: { cloudId, conversation } },
-  res
-) {
-  let { actionMessage } = require('../messages/action-message.js')
-  debug(actionMessage)
-
-  sendToStride.sendMessage(cloudId, conversation.id, actionMessage, function() {
-    debug('Message Sent: ', actionMessage)
-    //Stop Webhook from sending 3 times by returning 200;
-    res.send('200')
-  })
-})
-
-// If the bot is mention it will send an applicaiton card back with open dialog
-// action button
-// -----------------------------------------------------------------------------
-router.post('/bot-mention', jwt.validateJWT, function(
-  { body: { cloudId, conversation } },
-  res
-) {
-  let { actionCard } = require('../messages/action-card.js')
-
-  sendToStride.sendMessage(cloudId, conversation.id, actionCard, function() {
-    debug('Message Sent: ', actionCard)
-    //Stop Webhook from sending 3 times by returning 200;
-    res.send('200')
-  })
 })
 
 router.get('/sidebar', (req, res) => {

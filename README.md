@@ -1,81 +1,62 @@
-# README #
-
-## What is this? ##
+# Stride {app topic}
 
 This is an example app for Atlassian Stride.
-This app shows how you can use actions to open a modal window in stride.
 
-## How do I get set up? ##
+{describe app at a high-level}
 
-### Prerequisites ###
+## Getting set up
 
-* Make sure you have node 8.9.x or above on your machine
-* Make sure you have the latest version of ngrok installed
+### Prerequisites
+
+* Make sure you have [Node.js 8.x](https://nodejs.org/) or above on your machine
+* Make sure you have the latest version of [ngrok](https://ngrok.com/) installed
 * Sign up for an account on [https://developer.atlassian.com](https://developer.atlassian.com)
-* [Create a new app](https://developer.atlassian.com/apps/create). Let's call it the 'Stride Actions Example App'.
+* In the upper right corner click on your avatar and click [Create app](https://developer.atlassian.com/apps/create). Give your app a name, there are no wrong names. You can ignore description and icon at this point.
+* In the next step you'll be asked to Enable an Atlassian API for your app, click on **Enable API** for the Stride API.
 * Once your app is created you need to:
-  * Go into the 'App Features' tab and enabled the bot account for your app.
+  * Go into the 'App Features' tab and ensure that the **Enabled a bot account** checkbox is checked.
   * Go into the 'Enabled APIs' tab and copy the Stride API Client Id and Client Secret, we'll need this later.
 
-### Running the app ###
+### Running the app
 
-* Clone this repository to your local machine. ```git clone git@bitbucket.org:atlassian/stride-action-example.git```
-* Open a terminal window and go into your local repository to run ```npm install```.
-* Once that command is finished you'll need to run ```PORT=3333 CLIENT_ID={clientId} CLIENT_SECRET={clientSecret} npm run dev ``` or you can also store the PORT, CLIENT_ID, and CLIENT_SECRET in .env file
-* Now open a second terminal window and run ```ngrok http 3333```.
-* Copy the https url from your Ngrok output, this is where your descriptor lives.
-* Go back to your app page on [https://developer.atlassian.com/apps](https://developer.atlassian.com/apps)
-* Go into the 'Install' tab and paste your ngrok url in the Descriptor url field.
-* Click 'Refresh'
-* You app is now live and ready for use.
+* Clone this repository to your local machine.
+* Open a terminal window and `cd` into your local repository and run ```npm install```.
+* One npm finishes installing the node modules we can start up our app.  You can look in `package.json` for all the available scripts to run. We're going to start our app with logging turned on so we can see what's happening behind the scenes. Run `npm run verbose`.
+* Now open a second terminal window and run ```ngrok http 3000```.  We need ngrok to expose our app running locally on our machine out to the internet so Stride can see it.
+* Once ngrok starts up copy the https url from your ngrok output, this is where your app lives. You can get to the descriptor by navigating to the ngrok url + /descriptor (should look something like this `https://xxxxxxxx.ngrok.io/descriptor`)
+* Go back to your app page on [https://developer.atlassian.com/apps](https://developer.atlassian.com/apps) and click on the app we created above
+* Go into the 'Install' tab and paste your descriptor url in the *Descriptor Url* field.
+* Click 'Refresh', you should see a green indicator
+* Your app is now live and ready for use.
 
-### Installing the app ###
+### Installing the app
 
-* Copy the installation url from your 'Install' tab in your app page.
-* Go into a Stride room and click on the 'Apps' glance on the right side of your screen, this will open up a sidebar.
-* Click on the + icon at the top of the sidebar, this will open internal marketplace and show the installed apps for your Stride room.
-* Click on the 'Add custom app' link at the top of the page, this will open up a dialog where you can paster your installation URL. This will load your app's information into the dialog.
+* On the 'Install' tab, copy the **Installation URL**. This is the url we'll use to install the app in Stride.
+* Go into a Stride room and click on the 'Apps' glance (the icon looks like a hexagon with a circle in the middle) on the right side of your screen, this will open up a sidebar.
+* Click on the + icon at the top of the sidebar, this will open Strides app marketplace.
+* Click on the 'Add custom app' link at the top of the page, this will open up a dialog where you can paste your installation URL. This will load your app's information into the dialog.
 * Click 'Agree' to install the app.
 
-### Seeing it in action ###
+### Seeing it in action
 
-* Mention the app in your room and it will send a message with an **application card** and a "view dialog" link. Clicking this will open the dialog modal
-* Mention the word "action" and a **message link** that will open a dialog will appear. Clicking this will open the dialog modal
-* Click on the **"meatball" •••**   menu on the right side of the message input and you will see an option for "Open Dialog". Clicking this will open the dialog modal.
-* On any submitted message text you can click on the **"meatball" •••** menu on the right side of the message text and you will see and option for "Send to Dialog"
+{TODO talk about what the user should expect to see when running this app}
 
-Reference Documentation
-https://developer.atlassian.com/cloud/stride/learning/actions/
-### Input Action ###
-https://developer.atlassian.com/cloud/stride/apis/modules/chat/inputAction/
-### Action targets ###
-https://developer.atlassian.com/cloud/stride/apis/modules/chat/actionTarget/
-### Message action ###
-https://developer.atlassian.com/cloud/stride/apis/modules/chat/messageAction/
+## The code
 
-#### Mark Action####
-https://developer.atlassian.com/cloud/stride/apis/document/marks/action/
+There are a lot of files in the repository so lets get you to the right place in the code to look at what's going on.
 
-### Actions as inline selects in messages ###
+### `{code file}`
 
-### Actions as links in messages ###
-https://developer.atlassian.com/cloud/stride/apis/document/marks/link/
-### Actions as buttons in Application Cards ###
-https://developer.atlassian.com/cloud/stride/apis/document/nodes/applicationCard/
+{Walk them through the relevant code in this file}
 
-### Javascript API ###
-https://developer.atlassian.com/cloud/stride/apis/jsapi/action/openTarget/
+{repeat and rinse}
 
-### How the code works ###
-This example focusses on using all the different action types in stride.
-The bulk of our example code can be found in **./routes/index.js.**
+### Tests
 
-When you mention the app in a conversation, this will trigger the **/bot-mention** endpoint (describe in our app descriptor).
+There are a couple of provided tests in this repository.  We're using [jest](https://facebook.github.io/jest/) to run our tests. You can find the tests in the __tests__ folders.
 
-This bot-mention endpoint gets captures in our **./app.js** file and calls our markdown module to send a message using the **sendMarkdownMessage** function.
+{Discuss the tests you've written}
 
-The **sendMarkdownMessage** function will read in our example markdown file from the filesystem and call the **convertMarkdownToDoc** function (available in our markdown module), we are using await/async here because we need to wait on the results of this function before we can proceed.
+## Need help
 
-This function will use the Atlassian provided MD-to-ADF service to convert the markdown code into ADF and will return this ADF format.
-
-Our **sendMarkdownMessage** will now call the **./helper/messages.js** module to send a message with the ADF content to our conversation.
+Need help with this sample code or want to ask a question about Stride app development?  Head over to the [Atlassian Developer Community](https://community.developer.atlassian.com/) and create a new topic in the [Stride Development Category](https://community.developer.atlassian.com/c/stride-development).
